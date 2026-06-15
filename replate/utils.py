@@ -71,6 +71,18 @@ def inject_style() -> None:
 [data-testid="stSidebarNav"] {
     background-color: #FFFFFF !important;
 }
+/* Sidebar text black */
+[data-testid="stSidebar"] * {
+    color: #2A1B24 !important;
+}
+
+[data-testid="stSidebarNav"] * {
+    color: #2A1B24 !important;
+}
+
+[data-testid="stSidebarNav"] a {
+    color: #2A1B24 !important;
+}
 
         /* Overline */
         .overline {

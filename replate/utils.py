@@ -59,6 +59,18 @@ def inject_style() -> None:
             letter-spacing: -0.01em;
             color: #2A1B24 !important;
         }
+        /* White Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #FFFFFF !important;
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    background-color: #FFFFFF !important;
+}
+
+[data-testid="stSidebarNav"] {
+    background-color: #FFFFFF !important;
+}
 
         /* Overline */
         .overline {

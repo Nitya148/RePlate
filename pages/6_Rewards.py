@@ -55,34 +55,62 @@ for i, v in enumerate(vouchers):
 
 # History
 st.markdown("---")
-red_col, tx_col = st.columns(2)
-with red_col:
-    st.subheader("Your redemptions")
-    reds = my_redemptions(user["id"])
-    if not reds:
-        st.caption("No redemptions yet.")
-    for r in reds:
-        st.markdown(
-            f"<div style='background:white;border:1px solid rgba(42,27,36,0.08);border-radius:12px;padding:12px 14px;margin-bottom:8px;'>"
-            f"<div style='font-size:11px;color:#695A62;text-transform:uppercase;letter-spacing:0.18em;'>{r['partner']}</div>"
-            f"<div style='margin-top:2px;'><strong>{r['voucher_title']}</strong></div>"
-            f"<div style='margin-top:6px;font-family:monospace;background:#2A1B24;color:#FDFBF7;display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;'>{r['code']}</div>"
-            f"</div>",
-            unsafe_allow_html=True,
-        )
 
-with tx_col:
-    st.subheader("Point history")
+tab_red, tab_tx = st.tabs(["🎁 Redeemed Rewards", "📊 Point History"])
+
+with tab_red:
+    st.subheader("Your Redeemed Rewards")
+
+    reds = my_redemptions(user["id"])
+
+    if not reds:
+        st.info("No rewards redeemed yet.")
+
+for r in reds:
+    st.container(border=True)
+
+    st.caption(r["partner"])
+    st.markdown(f"### {r['voucher_title']}")
+    st.code(r["code"])
+
+    st.divider()
+with tab_tx:
+    st.subheader("Point History")
+
     txs = my_transactions(user["id"])
+
     if not txs:
-        st.caption("No transactions yet.")
+        st.info("No transactions yet.")
+
     for t in txs:
         color = "#6B705C" if t["amount"] > 0 else "#C85A40"
         sign = "+" if t["amount"] > 0 else ""
+
         st.markdown(
-            f"<div style='display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(42,27,36,0.06);'>"
-            f"<div><div>{t['reason']}</div><div style='font-size:11px;color:#695A62;'>{t['created_at'][:16].replace('T',' ')}</div></div>"
-            f"<span style='color:{color};font-weight:700;'>{sign}{t['amount']:,}</span>"
-            f"</div>",
+            f"""
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px solid rgba(42,27,36,0.06);
+            ">
+                <div>
+                    <div>{t['reason']}</div>
+                    <div style="
+                        font-size:11px;
+                        color:#695A62;
+                    ">
+                        {t['created_at'][:16].replace('T',' ')}
+                    </div>
+                </div>
+
+                <span style="
+                    color:{color};
+                    font-weight:700;
+                ">
+                    {sign}{t['amount']:,}
+                </span>
+            </div>
+            """,
             unsafe_allow_html=True,
         )

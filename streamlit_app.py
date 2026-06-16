@@ -18,13 +18,35 @@ st.set_page_config(
 init_db()
 seed_all()
 inject_style()
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"] {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # ----------------------------- Sidebar -------------------------------------
 
 with st.sidebar:
     logo_header()
+
+    st.page_link("pages/1_Discover.py", label="Discover")
+    st.page_link("pages/2_My_Listings.py", label="My Listings")
+    st.page_link("pages/3_Requests.py", label="Requests")
+    st.page_link("pages/4_Listing.py", label="Listing")
+    st.page_link("pages/5_Impact.py", label="Impact")
+    st.page_link("pages/6_Rewards.py", label="Rewards")
+    st.page_link("pages/7_Admin.py", label="Admin")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     user = current_user()
+
     if user:
         st.markdown(
             f"""<div style="background:#F4EFE6;padding:14px;border-radius:14px;margin-bottom:12px;">
@@ -34,12 +56,16 @@ with st.sidebar:
             </div>""",
             unsafe_allow_html=True,
         )
+
         if user["role"] == "donor":
             st.metric("Reward points", user.get("points", 0))
+
         st.divider()
+
         if st.button("Sign out", use_container_width=True, type="secondary"):
             logout()
             st.rerun()
+
     else:
         st.info("Sign in below to access the full network.")
 

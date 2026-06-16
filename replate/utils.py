@@ -203,13 +203,137 @@ def inject_style() -> None:
         }
 
         /* Inputs */
-        .stTextInput input, .stTextArea textarea, .stNumberInput input, .stSelectbox > div {
-            border-radius: 12px !important;
-        }
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input,
+.stSelectbox > div {
+    border-radius: 12px !important;
+    background-color: #FFFFFF !important;
+    color: #2A1B24 !important;
+    border: 1px solid rgba(42,27,36,0.12) !important;
+}
 
+[data-baseweb="input"] {
+    background-color: #FFFFFF !important;
+}
+/* Input text + placeholders */
+.stTextInput input {
+    color: #2A1B24 !important;
+}
+
+.stTextInput input::placeholder {
+    color: #695A62 !important;
+    opacity: 1 !important;
+}
+
+.stTextArea textarea {
+    color: #2A1B24 !important;
+}
+
+input {
+    color: #2A1B24 !important;
+}
+
+input::placeholder {
+    color: #695A62 !important;
+    opacity: 1 !important;
+}
+label {
+    color: #2A1B24 !important;
+}
+
+[data-testid="stWidgetLabel"] {
+    color: #2A1B24 !important;
+}
+
+[data-testid="stWidgetLabel"] p {
+    color: #2A1B24 !important;
+}
+
+[data-baseweb="base-input"] {
+    background-color: #FFFFFF !important;
+}
+
+.stTextInput > div > div {
+    background-color: #FFFFFF !important;
+}
+
+.stTextArea > div > div {
+    background-color: #FFFFFF !important;
+}
+/* Radio button text */
+div[role="radiogroup"] label {
+    color: #2A1B24 !important;
+    font-weight: 500 !important;
+}
+
+div[role="radiogroup"] p {
+    color: #2A1B24 !important;
+}
+
+/* Selectbox */
+.stSelectbox div[data-baseweb="select"] {
+    background: #FFFFFF !important;
+    color: #2A1B24 !important;
+}
+
+.stSelectbox div[data-baseweb="select"] * {
+    color: #2A1B24 !important;
+    background: #FFFFFF !important;
+}
+
+.stSelectbox svg {
+    color: #2A1B24 !important;
+}
+/* Info boxes */
+[data-testid="stAlert"] {
+    background-color: #F4EFE6 !important;
+    border: 1px solid rgba(42,27,36,0.08) !important;
+}
+
+[data-testid="stAlert"] * {
+    color: #2A1B24 !important;
+}
+
+[data-testid="stAlert"] p {
+    color: #2A1B24 !important;
+    font-weight: 500 !important;
+}
+/******** FIX DASHBOARD TEXT ********/
+
+/* Page links */
+[data-testid="stPageLink"] *,
+[data-testid="stPageLink"] p,
+[data-testid="stPageLink"] span {
+    color: #2A1B24 !important;
+    background: transparent !important;
+}
+
+/* Remove gray highlight blocks */
+.markdown-text-container,
+.stMarkdownContainer {
+    background: transparent !important;
+}
+
+/* Subheaders */
+h1, h2, h3, h4, h5, h6 {
+    color: #2A1B24 !important;
+}       
         /* Hide hamburger and footer */
-        #MainMenu { visibility: hidden; }
-        footer { visibility: hidden; }
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+.block-container {
+    padding-top: 1rem !important;
+}
 
         /* PIN display */
         .pin {

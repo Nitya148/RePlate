@@ -116,7 +116,7 @@ else:
             urg_badge = '<span class="badge badge-urgent">Expires soon</span>' if urgent else ""
             urgent_class = "urgent" if urgent else ""
             dist_str = f"{l.get('distance_km')} km · " if l.get('distance_km') is not None else ""
-            st.markdown(
+            st.html(
                 f"""<div class="listing-card">
                     <img src="{l.get('photo_url','')}" alt=""/>
                     <div style="position:relative;">
@@ -134,7 +134,6 @@ else:
                         </div>
                     </div>
                 </div>""",
-                unsafe_allow_html=True,
             )
 
             if st.button(

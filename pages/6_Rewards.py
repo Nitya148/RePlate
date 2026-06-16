@@ -17,7 +17,7 @@ st.title("Points that give back.")
 
 stat_col1, stat_col2 = st.columns([1, 3])
 with stat_col1:
-    stat_card("Your balance", f"{user.get('points',0):,}", accent=True)
+    stat_card("Your balance", f"{user.get('points', 0):,}", accent=True)
 with stat_col2:
     st.write("Redeem your rescue points with our local partners. Donor accounts earn points on every confirmed pickup.")
 
@@ -43,7 +43,7 @@ for i, v in enumerate(vouchers):
             </div>""",
             unsafe_allow_html=True,
         )
-        btn_label = "Redeem" if can else f"Need {v['points_cost'] - user.get('points',0):,} more"
+        btn_label = "Redeem" if can else f"Need {v['points_cost'] - user.get('points', 0):,} more"
         if st.button(btn_label, key=f"redeem_{v['id']}", disabled=not can, type="primary" if can else "secondary", use_container_width=True):
             ok, msg, code = redeem(user, v["id"])
             if ok:
@@ -53,42 +53,34 @@ for i, v in enumerate(vouchers):
             else:
                 st.error(msg)
 
-# History
 st.markdown("---")
 
 tab_red, tab_tx = st.tabs(["🎁 Redeemed Rewards", "📊 Point History"])
 
 with tab_red:
     st.subheader("Your Redeemed Rewards")
-
     reds = my_redemptions(user["id"])
-
     if not reds:
         st.info("No rewards redeemed yet.")
+    # Loop is now correctly INSIDE the with tab_red block
+    for r in reds:
+        with st.container(border=True):
+            st.caption(r["partner"])
+            st.markdown(f"### {r['voucher_title']}")
+            st.code(r["code"])
+            st.divider()
 
-for r in reds:
-    st.container(border=True)
-
-    st.caption(r["partner"])
-    st.markdown(f"### {r['voucher_title']}")
-    st.code(r["code"])
-
-    st.divider()
 with tab_tx:
     st.subheader("Point History")
-
     txs = my_transactions(user["id"])
-
     if not txs:
         st.info("No transactions yet.")
-
     for t in txs:
+        # Pre-resolve conditionals before building HTML
         color = "#6B705C" if t["amount"] > 0 else "#C85A40"
         sign = "+" if t["amount"] > 0 else ""
-
         st.markdown(
-            f"""
-            <div style="
+            f"""<div style="
                 display:flex;
                 justify-content:space-between;
                 padding:10px 0;
@@ -96,21 +88,13 @@ with tab_tx:
             ">
                 <div>
                     <div>{t['reason']}</div>
-                    <div style="
-                        font-size:11px;
-                        color:#695A62;
-                    ">
-                        {t['created_at'][:16].replace('T',' ')}
+                    <div style="font-size:11px;color:#695A62;">
+                        {t['created_at'][:16].replace('T', ' ')}
                     </div>
                 </div>
-
-                <span style="
-                    color:{color};
-                    font-weight:700;
-                ">
+                <span style="color:{color};font-weight:700;">
                     {sign}{t['amount']:,}
                 </span>
-            </div>
-            """,
+            </div>""",
             unsafe_allow_html=True,
         )
